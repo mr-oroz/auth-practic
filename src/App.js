@@ -1,23 +1,31 @@
-import logo from './logo.svg';
+// import logo from './logo.svg';
 import './App.css';
+import Home from "./components/home/home";
+import Header from "./components/header/header";
+import {data} from './data/data';
+import { Routes, Route} from 'react-router-dom';
+import { useState } from 'react';
+import Cart from './components/cart';
 
-function App() {
+const App = () => {
+const [product, setProduct] = useState(data);
+const increment = () => {
+  console.log("Increment")
+}
+const decrement = () => {
+  console.log("Decrement")
+}
+
+
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Routes>
+        <Route path='/' element={<Home increment={increment} decrement={decrement} data={product}/> }/>
+        <Route path='/cart' element={<Cart/>}/>
+      </Routes>
     </div>
   );
 }
