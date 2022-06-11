@@ -1,11 +1,24 @@
 import { useForm } from "react-hook-form";
+import services from "../../server/services";
+import {toast, ToastContainer} from 'react-toastify';
 
 const Register = () => {
     const { register, handleSubmit, formState: {errors}, reset } = useForm()
-
-    const onSubmit = (data) => {
-        console.log(data)
-        reset()
+    const onSubmit = async (data) => {
+        const object = {
+            email: data.email,
+            password: data.password,
+            firstName: data.firstName,
+            lastName: data.lastName
+        }
+        await services.register(object)
+            .then(response => {
+                console.log(response)
+                reset()
+            })
+            .catch(error => {
+                console.log(error)
+            }) 
     }
     return <form onSubmit={handleSubmit(onSubmit)}>
         <input {...register('email')}

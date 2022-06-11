@@ -1,20 +1,34 @@
 import { useForm } from "react-hook-form";
 
 const Login = () => {
-    const { register, handleSubmit, formState: {errors}, reset } = useForm()
+    const { register, handleSubmit, formState: { errors }, reset } = useForm()
     const onSubmit = (data) => {
-        console.log(data)
+        const object = {
+            email: data.email,
+            passowrd: data.passowrd
+        }
         reset()
     }
-    
+
     return <form onSubmit={handleSubmit(onSubmit)}>
-        <input {...register('email')}
+        <input
+            {...register('email', {
+                required: 'ne pustoi',
+            })}
             type="text"
             placeholder="email" />
-        <input {...register('password')}
+        {errors.email && <span>{errors.email.message}</span>}
+        <input {...register('password', {
+            required: 'ne pustoi',
+            minLength: {
+                value: 8,
+                message: 'minumum 8 symbol'
+            }
+        })}
             type="password"
             placeholder="password" />
-            <input type="submit" value='login' />
+        {errors.password && <span>{errors.password.message}</span>}
+        <input type="submit" value='login' />
     </form>
 }
 
