@@ -1,13 +1,20 @@
 import { useForm } from "react-hook-form";
+import services from '../../server/services';
 
-const Login = () => {
+const Login =  (props) => {
     const { register, handleSubmit, formState: { errors }, reset } = useForm()
-    const onSubmit = (data) => {
+    
+    const onSubmit = async (data) => {
         const object = {
             email: data.email,
-            passowrd: data.passowrd
+            password: data.password
         }
-        reset()
+        await services.login(object).then(response => {
+                console.log(response)
+                props.getMe()
+                reset()
+            })
+            .catch(e => console.log(e))
     }
 
     return <form onSubmit={handleSubmit(onSubmit)}>

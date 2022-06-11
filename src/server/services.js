@@ -6,6 +6,10 @@ const register = (object) => {
 }
 const login = (object) => {
     return instance.post("email/login", object)
+        .then(res => {
+            console.log(res)
+            Cookies.set('token', res.data.token)
+        })
 }
 const getMe = () => {
     return instance.get('me')
